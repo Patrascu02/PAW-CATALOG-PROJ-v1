@@ -1,0 +1,36 @@
+﻿@model PAW_CATALOG_PROJ.Models.Grade
+
+<h2>Add Grade</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Enrollment</label>
+        <input class="form-control" value="@ViewData["EnrollmentInfo"]" disabled />
+        <input type="hidden" asp-for="EnrollmentId" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="GradeValue"></label>
+        <input asp-for="GradeValue" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="GradeValue" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="DateRecorded" />
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a asp-controller="Enrollments" asp-action="Index" class="btn btn-secondary">Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<PAW_CATALOG_PROJ.Models.Enrollment>
+
+@{
+    ViewData["Title"] = "Enrollments";
+}
+
+<h1>Enrollments</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Enrollment ID</th>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Course Name</th>
+            <th>Teacher ID</th>
+            <th>Teacher Name</th>
+            <th>Group Number</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var enrollment in Model)
+        {
+            <tr>
+                <td>@enrollment.Id</td>
+                <td>@enrollment.Student?.Id</td>
+                <td>@enrollment.Student?.Name</td>
+                <td>@enrollment.Course?.CourseName</td>
+                <td>@enrollment.Teacher?.Id</td>
+                <td>@enrollment.Teacher?.Name</td>
+                <td>@enrollment.Group?.GroupNumber</td>
+                <td>
+                    <a asp-controller="Grades" asp-action="Create" asp-route-enrollmentId="@enrollment.Id">Add Grade</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

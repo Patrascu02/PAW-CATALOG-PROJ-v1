@@ -1,0 +1,49 @@
+﻿@model List<PAW_CATALOG_PROJ.Models.Grade>
+
+<h2>Your Grades</h2>
+
+<!-- Sorting dropdown -->
+<div class="mb-3">
+    <label for="sortDropdown">Sort by:</label>
+    <select id="sortDropdown" onchange="location = this.value;" class="form-select w-auto d-inline-block">
+        <option value="/Grades?sortBy=" selected="@(ViewBag.SortBy == null ? "selected" : null)">Default</option>
+        <option value="/Grades?sortBy=grade" selected="@(ViewBag.SortBy == "grade" ? "selected" : null)">Grade (descending)</option>
+        <option value="/Grades?sortBy=alphabetical" selected="@(ViewBag.SortBy == "alphabetical" ? "selected" : null)">Course name (A-Z)</option>
+    </select>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Title</th>
+            <th>Grade</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var grade in Model)
+        {
+            <tr>
+                <td>@grade.Enrollment.Course.CourseName</td>
+                <td>@grade.Title</td>
+                <td>@grade.GradeValue</td>
+                <td>@grade.DateRecorded.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p><strong>Overall average:</strong> @ViewBag.OverallAverage</p>
+
+@if (ViewBag.AveragesPerYear != null)
+{
+    <h4>Yearly Averages:</h4>
+    <ul>
+        @foreach (var item in ViewBag.AveragesPerYear)
+        {
+            <li>Year @item.Year: @item.Average</li>
+        }
+    </ul>
+}
+    

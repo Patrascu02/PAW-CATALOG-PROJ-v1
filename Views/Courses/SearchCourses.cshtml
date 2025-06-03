@@ -1,0 +1,9 @@
+﻿<form asp-action="SearchCourses" method="get">
+    <div class="form-group">
+        <label for="query">Search by course name or professor</label>
+        <input type="text" id="query" name="query" class="form-control" value="@Context.Request.Query["query"]" />
+    </div>
+    <div class="form-group mt-2">
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form>
