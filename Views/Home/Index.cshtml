@@ -1,25 +1,65 @@
-﻿@{
+@{
     ViewData["Title"] = "Online Catalog - Home";
 }
 
 <div class="container mt-5">
-    <div class="text-center bg-light p-5 rounded shadow">
-        <h1 class="display-4 text-primary fw-bold">Welcome!</h1>
-        <p class="lead mt-4">
-            This is a modern <strong>online catalog application</strong> designed for educational institutions to efficiently manage courses, students, teachers, and grades in a transparent and user-friendly way.
+    <div class="text-center">
+        <h1 class="display-3 text-primary fw-bold mb-3">Welcome!</h1>
+        <p class="lead mb-4">
+            This is a modern <span class="badge bg-info text-dark">online catalog</span> application designed for educational institutions to efficiently manage courses, students, teachers, and grades in a <strong>transparent</strong> and <strong>user-friendly</strong> way.
         </p>
-        <p>
-            Students can access their grades and averages anytime, teachers can quickly enter evaluations, and administrative staff can manage centralized data with ease. The platform is intuitive, secure, and accessible on all devices.
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Students</h5>
+                        <p class="card-text">
+                            Access grades and averages anytime, monitor your progress, and stay informed about your academic performance.
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-success">Teachers</h5>
+                        <p class="card-text">
+                            Quickly enter and manage evaluations, track student progress, and organize your courses efficiently.
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-warning">Admin Staff</h5>
+                        <p class="card-text">
+                            Manage centralized data, generate reports, and ensure smooth operation of academic processes.
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="fs-5 mb-4">
+            Key features include:
         </p>
-        <p>
-            Key features include: <strong>role-based user management (student, teacher, secretary, moderator)</strong>, <strong>course creation and editing</strong>, <strong>displaying grades and averages</strong>, PDF export, and many more.
-        </p>
-        <hr class="my-4" />
-        <p>
+        <ul class="list-group list-group-flush mb-4 mx-auto" style="max-width: 600px;">
+            <li class="list-group-item"><strong>Role-based user management</strong> (student, teacher, secretary, moderator)</li>
+            <li class="list-group-item"><strong>Course creation and editing</strong></li>
+            <li class="list-group-item"><strong>Displaying grades and averages</strong></li>
+            <li class="list-group-item"><strong>PDF export</strong> for reports and summaries</li>
+            <li class="list-group-item"><strong>Responsive and secure</strong> design for all devices</li>
+        </ul>
+
+        
+
+        <p class="mt-5 text-muted fst-italic">
             Whether you are a student tracking your progress or a teacher managing your classes, this platform offers all the tools you need to succeed in a digital academic environment.
-        </p>
-        <p>
-            Start exploring today and take full control of your educational management!
         </p>
     </div>
 </div>
