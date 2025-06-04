@@ -45,6 +45,13 @@ namespace PAW_CATALOG_PROJ.Controllers
                     .ToListAsync();
 
                 ViewBag.Role = "Student";
+
+                if (TempData["EnrollmentAlert"] != null)
+                {
+                    ViewBag.EnrollmentAlert = TempData["EnrollmentAlert"];
+                }
+
+
             }
             else if (User.IsInRole("Profesor"))
             {
@@ -103,7 +110,7 @@ namespace PAW_CATALOG_PROJ.Controllers
         }
 
 
-       /* public async Task<IActionResult> ShowSearchedCourse(string SearchCourses, string ProfesorId)
+        public async Task<IActionResult> ShowSearchedCourse(string SearchCourses, string ProfesorId)
         {
             var query = _context.Enrollments
                 .Include(e => e.Course)
@@ -132,7 +139,7 @@ namespace PAW_CATALOG_PROJ.Controllers
             return View("Index", courses);
         }
 
-        */
+        
 
 
 
@@ -323,6 +330,55 @@ namespace PAW_CATALOG_PROJ.Controllers
 
             return RedirectToAction("ManageEnrollments", new { id = CourseId });
         }
+
+        [Authorize(Roles = "Student")]
+        [HttpGet]
+        public async Task<IActionResult> FilterCourses(string filterType, int? minGrade)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Challenge();
+
+            var appUser = await _context.AppUsers.FirstOrDefaultAsync(u => u.Email == user.Email);
+            if (appUser == null) return Forbid();
+
+            var enrollments = await _context.Enrollments
+                .Include(e => e.Course)
+                .Include(e => e.Grades)
+                .Where(e => e.StudentId == appUser.Id)
+                .ToListAsync();
+
+            List<Course> filteredCourses;
+
+            if (filterType == "grade")
+            {
+                filteredCourses = enrollments
+                    .Where(e => e.Grades.Any() && e.Grades.Average(g => g.GradeValue) >= (minGrade ?? 0))
+                    .Select(e => e.Course)
+                    .Distinct()
+                    .ToList();
+            }
+            else if (filterType == "name")
+            {
+                filteredCourses = enrollments
+                    .Select(e => e.Course)
+                    .Distinct()
+                    .OrderBy(c => c.CourseName)
+                    .ToList();
+            }
+            else
+            {
+                
+                filteredCourses = enrollments
+                    .Select(e => e.Course)
+                    .Distinct()
+                    .ToList();
+            }
+
+            ViewBag.Role = "Student";
+            return View("Index", filteredCourses);
+        }
+
+
 
         private bool CourseExists(int id)
         {

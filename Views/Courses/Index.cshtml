@@ -9,9 +9,54 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <p>
-    <a asp-action="SearchCourses">Search for a course</a>
+    <form asp-action="ShowSearchedCourse" method="get" class="form-inline mb-3">
+        <input type="text" name="SearchCourses" class="form-control mr-2" placeholder="Course Name" />
+        <input type="text" name="ProfesorId" class="form-control mr-2" placeholder="Professor Id" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
 </p>
+
+
+<form asp-action="FilterCourses" method="get" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="filterType">Tip filtrare:</label>
+            <select name="filterType" id="filterType" class="form-control" onchange="toggleMinGradeField()">
+                <option value="grade">După notă minimă</option>
+                <option value="name">Alfabetic după nume curs</option>
+            </select>
+        </div>
+        <div class="col-md-4" id="minGradeDiv">
+            <label for="minGrade">Notă minimă:</label>
+            <input type="number" name="minGrade" id="minGrade" class="form-control" min="1" max="10" />
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Aplică filtrul</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    function toggleMinGradeField() {
+        const filterType = document.getElementById("filterType").value;
+        const minGradeDiv = document.getElementById("minGradeDiv");
+        minGradeDiv.style.display = (filterType === "grade") ? "block" : "none";
+    }
+
+    
+    document.addEventListener("DOMContentLoaded", toggleMinGradeField);
+</script>
+
+
+@if (ViewBag.Role == "Student" && ViewBag.EnrollmentAlert != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @ViewBag.EnrollmentAlert
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
 <table class="table">
     <thead>

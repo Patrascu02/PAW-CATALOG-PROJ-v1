@@ -5,7 +5,7 @@
         public int GradeId { get; set; }
 
         public int EnrollmentId { get; set; }
-        public Enrollment Enrollment { get; set; } = null!;
+        public Enrollment? Enrollment { get; set; } = null!;
 
         public string Title { get; set; } = null!;
 

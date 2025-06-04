@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PAW_CATALOG_PROJ.Data;
 using PAW_CATALOG_PROJ.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PAW_CATALOG_PROJ.Controllers
 {
@@ -46,9 +47,13 @@ namespace PAW_CATALOG_PROJ.Controllers
             return View(message);
         }
 
+
+       
         // GET: Messages/Create
         public IActionResult Create()
         {
+         
+
             ViewData["FromId"] = new SelectList(_context.AppUsers, "Id", "Email");
             ViewData["To"] = new SelectList(_context.AppUsers, "Id", "Email");
             return View();

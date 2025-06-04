@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PAW_CATALOG_PROJ.Data;
 using PAW_CATALOG_PROJ.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PAW_CATALOG_PROJ.Controllers
 {
@@ -76,6 +77,13 @@ namespace PAW_CATALOG_PROJ.Controllers
             {
                 _context.Add(enrollment);
                 await _context.SaveChangesAsync();
+
+                var course = await _context.Courses.FindAsync(enrollment.CourseId);
+                if (course != null)
+                {
+                    TempData["EnrollmentAlert"] = $"Ai fost înscris la cursul '{course.CourseName}'!";
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "CourseName", enrollment.CourseId);
@@ -145,6 +153,7 @@ namespace PAW_CATALOG_PROJ.Controllers
         }
 
         // GET: Enrollments/Delete/5
+        [Authorize(Roles = "Moderator,Secretar")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -169,6 +178,7 @@ namespace PAW_CATALOG_PROJ.Controllers
         // POST: Enrollments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Moderator,Secretar")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var enrollment = await _context.Enrollments.FindAsync(id);

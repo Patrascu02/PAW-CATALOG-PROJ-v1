@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PAW_CATALOG_PROJ.Data;
 using PAW_CATALOG_PROJ.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PAW_CATALOG_PROJ.Controllers
 {
@@ -67,6 +68,7 @@ namespace PAW_CATALOG_PROJ.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Secretar")]
         public async Task<IActionResult> Create([Bind("Id,GroupNumber")] Group @group)
         {
             if (ModelState.IsValid)
@@ -161,6 +163,27 @@ namespace PAW_CATALOG_PROJ.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> StudentList(int id)
+        {
+            var grupa = await _context.Groups.FirstOrDefaultAsync(g => g.Id == id);
+            if (grupa == null)
+            {
+                return NotFound();
+            }
+
+           
+            var studenti = await _context.Enrollments
+                .Include(e => e.Student)
+                .Where(e => e.GroupId == id)
+                .Select(e => e.Student)
+                .ToListAsync();
+
+            ViewBag.GroupNumber = grupa.GroupNumber;
+
+            return View(studenti);
+        }
+
 
         private bool GroupExists(int id)
         {

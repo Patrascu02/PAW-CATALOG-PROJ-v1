@@ -39,14 +39,7 @@ namespace PAW_CATALOG_PROJ.Controllers
 
             if (User.IsInRole("Profesor"))
             {
-                var grades = await _context.Grades
-                    .Include(g => g.Enrollment).ThenInclude(e => e.Student)
-                    .Include(g => g.Enrollment).ThenInclude(e => e.Course)
-                    .Where(g => g.Enrollment.TeacherId == appUser.Id)
-                    .ToListAsync();
-
-                ViewBag.Role = "Profesor";
-                return View("ProfesorIndex", grades);
+                return RedirectToAction("Index", "Enrollments");
             }
 
             if (User.IsInRole("Student"))

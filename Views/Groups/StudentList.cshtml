@@ -1,0 +1,27 @@
+﻿@model List<PAW_CATALOG_PROJ.Models.User>
+
+@{
+    ViewData["Title"] = "Lista Studenți";
+}
+
+<h2>Studenți din grupa @ViewBag.GroupNumber</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nume</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Name</td>
+                <td>@student.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Înapoi la grupe</a>
