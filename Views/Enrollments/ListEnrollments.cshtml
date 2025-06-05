@@ -1,25 +1,31 @@
 ﻿@model IEnumerable<PAW_CATALOG_PROJ.Models.Enrollment>
 
-<h2>Enrollments for course @ViewBag.CourseId</h2>
+@{
+    ViewData["Title"] = "Enrollments by Course";
+}
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Student</th>
-            <th>Teacher</th>
-            <th>Group</th>
-            <th>Enrollment Year</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var enrollment in Model)
-        {
+<div class="container mt-5">
+    <h2 class="text-primary mb-4">Enrollments for Course @ViewBag.CourseId</h2>
+
+    <table class="table table-bordered table-striped shadow-sm">
+        <thead class="table-dark">
             <tr>
-                <td>@enrollment.Student?.Email ?? "No student"</td>
-                <td>@enrollment.Teacher?.Name ?? "No teacher"</td>
-                <td>@enrollment.Group?.GroupNumber.ToString() ?? "No group"</td>
-                <td>@enrollment.EnrollmentYear</td>
+                <th>Student</th>
+                <th>Teacher</th>
+                <th>Group</th>
+                <th>Enrollment Year</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var enrollment in Model)
+            {
+                <tr>
+                    <td>@enrollment.Student?.Email ?? "No student"</td>
+                    <td>@enrollment.Teacher?.Name ?? "No teacher"</td>
+                    <td>@enrollment.Group?.GroupNumber.ToString() ?? "No group"</td>
+                    <td>@enrollment.EnrollmentYear</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

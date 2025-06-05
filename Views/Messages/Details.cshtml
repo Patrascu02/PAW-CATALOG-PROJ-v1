@@ -1,36 +1,38 @@
 ﻿@model PAW_CATALOG_PROJ.Models.Message
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Message Details";
 }
 
-<h1>Details</h1>
+<h1 class="mb-4">Message Details</h1>
 
-<div>
-    <h4>Message</h4>
-    <hr />
+<div class="card shadow-sm p-4 mb-4">
+    <h4 class="mb-3">Message Information</h4>
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-3 fw-semibold">
             @Html.DisplayNameFor(model => model.From)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.From.Email)
         </dd>
-        <dt class = "col-sm-2">
+
+        <dt class="col-sm-3 fw-semibold">
             @Html.DisplayNameFor(model => model.Recipient)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Recipient.Email)
         </dd>
-        <dt class = "col-sm-2">
+
+        <dt class="col-sm-3 fw-semibold">
             @Html.DisplayNameFor(model => model.Content)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Content)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="mb-3">
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary me-2">Edit</a>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
 </div>

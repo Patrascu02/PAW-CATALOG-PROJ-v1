@@ -4,53 +4,78 @@
     ViewData["Title"] = "Manage Enrollments for " + Model.CourseName;
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
 
-<form asp-action="AddEnrollment" method="post">
-    <input type="hidden" name="CourseId" value="@Model.Id" />
+    <form asp-action="AddEnrollment" method="post" class="needs-validation" novalidate>
+        <input type="hidden" name="CourseId" value="@Model.Id" />
 
-    <div class="form-group">
-        <label for="StudentId">Student</label>
-        <select class="form-control" id="StudentId" name="StudentId" required>
-            <option value="">-- Select Student --</option>
-            @foreach (var student in (SelectList)ViewBag.AllStudents)
-            {
-                <option value="@student.Value">@student.Text</option>
-            }
-        </select>
-    </div>
+        <div class="mb-3">
+            <label for="StudentId" class="form-label">Student</label>
+            <select class="form-select" id="StudentId" name="StudentId" required>
+                <option value="" selected disabled>-- Select Student --</option>
+                @foreach (var student in (SelectList)ViewBag.AllStudents)
+                {
+                    <option value="@student.Value">@student.Text</option>
+                }
+            </select>
+            <div class="invalid-feedback">Please select a student.</div>
+        </div>
 
-    <div class="form-group">
-        <label for="TeacherId">Profesor</label>
-        <select class="form-control" id="TeacherId" name="TeacherId" required>
-            <option value="">-- Select Profesor --</option>
-            @foreach (var teacher in (SelectList)ViewBag.AllTeachers)
-            {
-                <option value="@teacher.Value">@teacher.Text</option>
-            }
-        </select>
-    </div>
+        <div class="mb-3">
+            <label for="TeacherId" class="form-label">Professor</label>
+            <select class="form-select" id="TeacherId" name="TeacherId" required>
+                <option value="" selected disabled>-- Select Professor --</option>
+                @foreach (var teacher in (SelectList)ViewBag.AllTeachers)
+                {
+                    <option value="@teacher.Value">@teacher.Text</option>
+                }
+            </select>
+            <div class="invalid-feedback">Please select a professor.</div>
+        </div>
 
-    <div class="form-group">
-        <label for="GroupId">Grupa</label>
-        <select class="form-control" id="GroupId" name="GroupId" required>
-            <option value="">-- Select Grupa --</option>
-            @foreach (var group in (SelectList)ViewBag.Groups)
-            {
-                <option value="@group.Value">@group.Text</option>
-            }
-        </select>
-    </div>
+        <div class="mb-3">
+            <label for="GroupId" class="form-label">Group</label>
+            <select class="form-select" id="GroupId" name="GroupId" required>
+                <option value="" selected disabled>-- Select Group --</option>
+                @foreach (var group in (SelectList)ViewBag.Groups)
+                {
+                    <option value="@group.Value">@group.Text</option>
+                }
+            </select>
+            <div class="invalid-feedback">Please select a group.</div>
+        </div>
 
-    <div class="form-group">
-        <label for="EnrollmentYear">Anul de studiu</label>
-        <select class="form-control" id="EnrollmentYear" name="EnrollmentYear" required>
-            <option value="">-- Select Anul --</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-        </select>
-    </div>
+        <div class="mb-4">
+            <label for="EnrollmentYear" class="form-label">Year of Study</label>
+            <select class="form-select" id="EnrollmentYear" name="EnrollmentYear" required>
+                <option value="" selected disabled>-- Select Year --</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <div class="invalid-feedback">Please select the year of study.</div>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Adaugă înscriere</button>
-</form>
+        <button type="submit" class="btn btn-primary px-4">
+            Add Enrollment
+        </button>
+    </form>
+</div>
+
+<script>
+    
+    (() => {
+        'use strict'
+        const forms = document.querySelectorAll('.needs-validation')
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>

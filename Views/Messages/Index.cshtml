@@ -1,47 +1,37 @@
 ﻿@model IEnumerable<PAW_CATALOG_PROJ.Models.Message>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Messages";
 }
 
-<h1>Index</h1>
+<h1 class="mb-4">Messages</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New Message</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-striped table-hover align-middle">
+    <thead class="table-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.From)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Recipient)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th></th>
+            <th scope="col">@Html.DisplayNameFor(model => model.From)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Recipient)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Content)</th>
+            <th scope="col" style="width: 180px;">Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.From.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Recipient.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.From.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.Recipient.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.Content)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info me-1">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

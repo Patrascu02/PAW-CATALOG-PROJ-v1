@@ -1,49 +1,52 @@
 ﻿@model List<PAW_CATALOG_PROJ.Models.Grade>
 
-<h2>Your Grades</h2>
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary fw-bold">Your Grades</h2>
 
-<!-- Sorting dropdown -->
-<div class="mb-3">
-    <label for="sortDropdown">Sort by:</label>
-    <select id="sortDropdown" onchange="location = this.value;" class="form-select w-auto d-inline-block">
-        <option value="/Grades?sortBy=" selected="@(ViewBag.SortBy == null ? "selected" : null)">Default</option>
-        <option value="/Grades?sortBy=grade" selected="@(ViewBag.SortBy == "grade" ? "selected" : null)">Grade (descending)</option>
-        <option value="/Grades?sortBy=alphabetical" selected="@(ViewBag.SortBy == "alphabetical" ? "selected" : null)">Course name (A-Z)</option>
-    </select>
-</div>
+    <!-- Sorting dropdown -->
+    <div class="mb-4">
+        <label for="sortDropdown" class="form-label fw-semibold me-2">Sort by:</label>
+        <select id="sortDropdown" onchange="location = this.value;" class="form-select w-auto d-inline-block">
+            <option value="/Grades?sortBy=" selected="@(ViewBag.SortBy == null ? "selected" : null)">Default</option>
+            <option value="/Grades?sortBy=grade" selected="@(ViewBag.SortBy == "grade" ? "selected" : null)">Grade (descending)</option>
+            <option value="/Grades?sortBy=alphabetical" selected="@(ViewBag.SortBy == "alphabetical" ? "selected" : null)">Course name (A-Z)</option>
+        </select>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Course</th>
-            <th>Title</th>
-            <th>Grade</th>
-            <th>Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var grade in Model)
-        {
+    <table class="table table-bordered table-striped shadow-sm">
+        <thead class="table-dark">
             <tr>
-                <td>@grade.Enrollment.Course.CourseName</td>
-                <td>@grade.Title</td>
-                <td>@grade.GradeValue</td>
-                <td>@grade.DateRecorded.ToShortDateString()</td>
+                <th>Course</th>
+                <th>Title</th>
+                <th>Grade</th>
+                <th>Date</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var grade in Model)
+            {
+                <tr>
+                    <td>@grade.Enrollment.Course.CourseName</td>
+                    <td>@grade.Title</td>
+                    <td>@grade.GradeValue</td>
+                    <td>@grade.DateRecorded.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<p><strong>Overall average:</strong> @ViewBag.OverallAverage</p>
+    <p class="mt-4 fw-semibold">
+        <strong>Overall average:</strong> @ViewBag.OverallAverage
+    </p>
 
-@if (ViewBag.AveragesPerYear != null)
-{
-    <h4>Yearly Averages:</h4>
-    <ul>
-        @foreach (var item in ViewBag.AveragesPerYear)
-        {
-            <li>Year @item.Year: @item.Average</li>
-        }
-    </ul>
-}
-    
+    @if (ViewBag.AveragesPerYear != null)
+    {
+        <h4 class="mt-4">Yearly Averages:</h4>
+        <ul class="list-group w-auto">
+            @foreach (var item in ViewBag.AveragesPerYear)
+            {
+                <li class="list-group-item">Year @item.Year: @item.Average</li>
+            }
+        </ul>
+    }
+</div>

@@ -1,88 +1,104 @@
 ﻿@model IEnumerable<PAW_CATALOG_PROJ.Models.Course>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Courses";
 }
 
-<h1>Courses</h1>
+<div class="container mt-5">
+    <h1 class="mb-4 text-primary fw-bold">Courses</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-<p>
-    <form asp-action="ShowSearchedCourse" method="get" class="form-inline mb-3">
-        <input type="text" name="SearchCourses" class="form-control mr-2" placeholder="Course Name" />
-        <input type="text" name="ProfesorId" class="form-control mr-2" placeholder="Professor Id" />
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-</p>
-
-
-<form asp-action="FilterCourses" method="get" class="mb-4">
-    <div class="row">
-        <div class="col-md-4">
-            <label for="filterType">Tip filtrare:</label>
-            <select name="filterType" id="filterType" class="form-control" onchange="toggleMinGradeField()">
-                <option value="grade">După notă minimă</option>
-                <option value="name">Alfabetic după nume curs</option>
-            </select>
+    @if (ViewBag.Role == "Moderator")
+    {
+        <div class="mb-3">
+            <a asp-action="Create" class="btn btn-success btn-lg shadow-sm">
+                Create New Course
+            </a>
         </div>
-        <div class="col-md-4" id="minGradeDiv">
-            <label for="minGrade">Notă minimă:</label>
-            <input type="number" name="minGrade" id="minGrade" class="form-control" min="1" max="10" />
-        </div>
-        <div class="col-md-4 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100">Aplică filtrul</button>
-        </div>
-    </div>
-</form>
-
-<script>
-    function toggleMinGradeField() {
-        const filterType = document.getElementById("filterType").value;
-        const minGradeDiv = document.getElementById("minGradeDiv");
-        minGradeDiv.style.display = (filterType === "grade") ? "block" : "none";
     }
 
-    
-    document.addEventListener("DOMContentLoaded", toggleMinGradeField);
-</script>
+    <form asp-action="ShowSearchedCourse" method="get" class="row g-2 align-items-center mb-4">
+        <div class="col-md-5">
+            <input type="text" name="SearchCourses" class="form-control" placeholder="Course Name" />
+        </div>
+        <div class="col-md-4">
+            <input type="text" name="ProfesorId" class="form-control" placeholder="Professor ID" />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary w-100">
+                Search
+            </button>
+        </div>
+    </form>
 
+    <form asp-action="FilterCourses" method="get" class="mb-5">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label for="filterType" class="form-label fw-semibold">Filter By:</label>
+                <select name="filterType" id="filterType" class="form-select" onchange="toggleMinGradeField()">
+                    @if (ViewBag.Role == "Student")
+                    {
+                        <option value="grade">Minimum Grade</option>
+                    }
+                    <option value="name">Alphabetical by Course Name</option>
+                </select>
+            </div>
+            @if (ViewBag.Role == "Student")
+            {
+                <div class="col-md-4" id="minGradeDiv">
+                    <label for="minGrade" class="form-label fw-semibold">Minimum Grade:</label>
+                    <input type="number" name="minGrade" id="minGrade" class="form-control" min="1" max="10" />
+                </div>
+            }
+            else
+            {
+                <div class="col-md-4" style="display:none;" id="minGradeDiv"></div>
+            }
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">
+                    Apply Filter
+                </button>
+            </div>
+        </div>
+    </form>
 
-@if (ViewBag.Role == "Student" && ViewBag.EnrollmentAlert != null)
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        @ViewBag.EnrollmentAlert
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CourseName)
-            </th>
-            <th>Actions</th> 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CourseName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                    <a asp-action="ManageEnrollments" asp-route-id="@item.Id">Manage Enrollments</a>
-                   
-
-                </td>
-            </tr>
+    <script>
+        function toggleMinGradeField() {
+            const filterType = document.getElementById("filterType").value;
+            const minGradeDiv = document.getElementById("minGradeDiv");
+            minGradeDiv.style.display = (filterType === "grade") ? "block" : "none";
         }
-    </tbody>
-</table>
+
+        document.addEventListener("DOMContentLoaded", toggleMinGradeField);
+    </script>
+
+    @if (ViewBag.Role == "Student" && ViewBag.EnrollmentAlert != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @ViewBag.EnrollmentAlert
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <table class="table table-hover table-bordered align-middle shadow-sm">
+        <thead class="table-light text-center">
+            <tr>
+                <th scope="col" class="w-75">@Html.DisplayNameFor(model => model.CourseName)</th>
+                <th scope="col" class="w-25">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.CourseName)</td>
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary me-1 mb-1">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info me-1 mb-1 text-white">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger me-1 mb-1">Delete</a>
+                        <a asp-action="ManageEnrollments" asp-route-id="@item.Id" class="btn btn-sm btn-secondary mb-1">Manage Enrollments</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

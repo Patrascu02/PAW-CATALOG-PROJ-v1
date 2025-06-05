@@ -1,51 +1,37 @@
-﻿@model IEnumerable<PAW_CATALOG_PROJ.Models.Grade>  
+﻿@model IEnumerable<PAW_CATALOG_PROJ.Models.Grade>
 
-@{  
-    ViewData["Title"] = "Index";  
-}  
+@{
+    ViewData["Title"] = "Grades List";
+}
 
-<h1>Index</h1>  
+<div class="container mt-5">
+    <h1 class="mb-4 text-primary fw-bold">Grades List</h1>
 
-
-<table class="table">  
-    <thead>  
-        <tr>  
-            <th>  
-                @Html.DisplayNameFor(model => model.Enrollment)  
-            </th>  
-            <th>  
-                @Html.DisplayNameFor(model => model.Title)  
-            </th>  
-            <th>  
-                @Html.DisplayNameFor(model => model.GradeValue)  
-            </th>  
-            <th>  
-                @Html.DisplayNameFor(model => model.DateRecorded)  
-            </th>  
-            <th></th>  
-        </tr>  
-    </thead>  
-    <tbody>  
-@foreach (var item in Model) {  
-        <tr>  
-            <td>  
-                @Html.DisplayFor(modelItem => item.Enrollment.Id)  
-            </td>  
-            <td>  
-                @Html.DisplayFor(modelItem => item.Title)  
-            </td>  
-            <td>  
-                @Html.DisplayFor(modelItem => item.GradeValue)  
-            </td>  
-            <td>  
-                @Html.DisplayFor(modelItem => item.DateRecorded)  
-            </td>  
-            <td>  
-                <a asp-action="Edit" asp-route-id="@item.GradeId">Edit</a> |  
-                <a asp-action="Details" asp-route-id="@item.GradeId">Details</a> |  
-                <a asp-action="Delete" asp-route-id="@item.GradeId">Delete</a>  
-            </td>  
-        </tr>  
-}  
-    </tbody>  
-</table>
+    <table class="table table-bordered table-striped shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Enrollment)</th>
+                <th>@Html.DisplayNameFor(model => model.Title)</th>
+                <th>@Html.DisplayNameFor(model => model.GradeValue)</th>
+                <th>@Html.DisplayNameFor(model => model.DateRecorded)</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Enrollment.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td>@Html.DisplayFor(modelItem => item.GradeValue)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DateRecorded)</td>
+                    <td class="text-center">
+                        <a asp-action="Edit" asp-route-id="@item.GradeId" class="btn btn-warning btn-sm me-1">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.GradeId" class="btn btn-info btn-sm me-1">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.GradeId" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,15 +1,15 @@
 ﻿@model List<PAW_CATALOG_PROJ.Models.User>
 
 @{
-    ViewData["Title"] = "Lista Studenți";
+    ViewData["Title"] = "Student List";
 }
 
-<h2>Studenți din grupa @ViewBag.GroupNumber</h2>
+<h2>Students in Group @ViewBag.GroupNumber</h2>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>Nume</th>
+            <th>Name</th>
             <th>Email</th>
         </tr>
     </thead>
@@ -24,4 +24,4 @@
     </tbody>
 </table>
 
-<a asp-action="Index" class="btn btn-secondary">Înapoi la grupe</a>
+<a asp-action="Index" class="btn btn-secondary">Back to Groups</a>
