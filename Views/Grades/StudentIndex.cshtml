@@ -1,25 +1,25 @@
 ﻿@model List<PAW_CATALOG_PROJ.Models.Grade>
 
-<div class="container mt-5">
-    <h2 class="mb-4 text-primary fw-bold">Your Grades</h2>
+<h2 class="mb-4 text-primary fw-bold">Your Grades</h2>
 
-    <!-- Sorting dropdown -->
-    <div class="mb-4">
-        <label for="sortDropdown" class="form-label fw-semibold me-2">Sort by:</label>
-        <select id="sortDropdown" onchange="location = this.value;" class="form-select w-auto d-inline-block">
-            <option value="/Grades?sortBy=" selected="@(ViewBag.SortBy == null ? "selected" : null)">Default</option>
-            <option value="/Grades?sortBy=grade" selected="@(ViewBag.SortBy == "grade" ? "selected" : null)">Grade (descending)</option>
-            <option value="/Grades?sortBy=alphabetical" selected="@(ViewBag.SortBy == "alphabetical" ? "selected" : null)">Course name (A-Z)</option>
-        </select>
-    </div>
+<!-- Sorting dropdown -->
+<div class="mb-4">
+    <label for="sortDropdown" class="form-label me-2">Sort by:</label>
+    <select id="sortDropdown" onchange="location = this.value;" class="form-select d-inline-block w-auto">
+        <option value="/Grades?sortBy=" selected="@(ViewBag.SortBy == null ? "selected" : null)">Default</option>
+        <option value="/Grades?sortBy=grade" selected="@(ViewBag.SortBy == "grade" ? "selected" : null)">Grade (descending)</option>
+        <option value="/Grades?sortBy=alphabetical" selected="@(ViewBag.SortBy == "alphabetical" ? "selected" : null)">Course name (A-Z)</option>
+    </select>
+</div>
 
-    <table class="table table-bordered table-striped shadow-sm">
+<div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle shadow-sm">
         <thead class="table-dark">
             <tr>
-                <th>Course</th>
-                <th>Title</th>
-                <th>Grade</th>
-                <th>Date</th>
+                <th scope="col">Course</th>
+                <th scope="col">Title</th>
+                <th scope="col">Grade</th>
+                <th scope="col">Date</th>
             </tr>
         </thead>
         <tbody>
@@ -34,19 +34,17 @@
             }
         </tbody>
     </table>
-
-    <p class="mt-4 fw-semibold">
-        <strong>Overall average:</strong> @ViewBag.OverallAverage
-    </p>
-
-    @if (ViewBag.AveragesPerYear != null)
-    {
-        <h4 class="mt-4">Yearly Averages:</h4>
-        <ul class="list-group w-auto">
-            @foreach (var item in ViewBag.AveragesPerYear)
-            {
-                <li class="list-group-item">Year @item.Year: @item.Average</li>
-            }
-        </ul>
-    }
 </div>
+
+<p class="mt-4"><strong>Overall average:</strong> <span class="text-success">@ViewBag.OverallAverage</span></p>
+
+@if (ViewBag.AveragesPerYear != null)
+{
+    <h4 class="mt-4">Yearly Averages:</h4>
+    <ul class="list-group list-group-flush">
+        @foreach (var item in ViewBag.AveragesPerYear)
+        {
+            <li class="list-group-item">Year @item.Year: <strong>@item.Average</strong></li>
+        }
+    </ul>
+}

@@ -1,49 +1,39 @@
 ﻿@model IEnumerable<PAW_CATALOG_PROJ.Models.Enrollment>
-@using Microsoft.AspNetCore.Identity
-@using System.Security.Claims
 
 @{
-    ViewData["Title"] = "Enrollment List";
-    var isModerator = User.IsInRole("Moderator");
+    ViewData["Title"] = "Enrollments";
 }
 
-<div class="container mt-5">
-    <h1 class="text-primary fw-bold mb-4">Enrollment List</h1>
+<h1 class="mb-4 text-primary fw-bold">Enrollments</h1>
 
-    <div class="mb-4">
-        <a asp-action="Create" class="btn btn-success btn-lg shadow-sm">Add New Enrollment</a>
-    </div>
-
-    <table class="table table-bordered table-striped shadow-sm">
+<div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle shadow-sm">
         <thead class="table-dark">
             <tr>
-                <th>@Html.DisplayNameFor(model => model.First().Student)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Course)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Teacher)</th>
-                <th>@Html.DisplayNameFor(model => model.First().Group)</th>
-                <th class="text-center">Actions</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Teacher Name</th>
+                <th scope="col">Group Number</th>
+                <th scope="col">Enrollment Year</th>
+                <th scope="col" class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var enrollment in Model)
             {
                 <tr>
-                    <td>@item.Student?.Email</td>
-                    <td>@item.Course?.CourseName</td>
-                    <td>@item.Teacher?.Email</td>
-                    <td>@item.Group?.GroupNumber</td>
+                    <td>@enrollment.Student?.Name</td>
+                    <td>@enrollment.Course?.CourseName</td>
+                    <td>@enrollment.Teacher?.Name</td>
+                    <td>@enrollment.Group?.GroupNumber</td>
+                    <td>@enrollment.EnrollmentYear</td>
                     <td class="text-center">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm me-1">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm me-1">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm me-1">Delete</a>
-
-                        @if (isModerator)
-                        {
-                            <button type="button" class="btn btn-secondary btn-sm"
-                                    onclick="alert('Teacher ID: @item.TeacherId')">
-                                View Teacher ID
-                            </button>
-                        }
+                        <a class="btn btn-sm btn-outline-primary"
+                           asp-controller="Grades"
+                           asp-action="Create"
+                           asp-route-enrollmentId="@enrollment.Id">
+                            Add Grade
+                        </a>
                     </td>
                 </tr>
             }

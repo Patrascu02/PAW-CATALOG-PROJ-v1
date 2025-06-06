@@ -57,6 +57,7 @@ namespace PAW_CATALOG_PROJ.Controllers
         }
 
         // GET: Enrollments/Create
+
         public IActionResult Create()
         {
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "CourseName");
